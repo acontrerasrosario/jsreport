@@ -29,6 +29,10 @@ VOLUME ["/jsreport"]
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends openssh-server \
+    && echo "root:Docker!" | chpasswd
+
 RUN npm install --production jsreport && \
     node node_modules/jsreport --init && \
     npm install --production --save --save-exact jsreport-ejs \
